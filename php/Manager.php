@@ -1,7 +1,14 @@
 <?php
+require_once("php/ApplicationHandler.php");
 class Manager{
 
     private $_isLoggedIn;
+    private $ApplicationHandler;
+
+    function __construct(){
+        $this->ApplicationHandler = new ApplicationHandler;
+        $this->debugToConsole("balls");
+    }
 
     public function isValidLogin($username,$password){
 
@@ -59,6 +66,15 @@ class Manager{
              array_push($clist,$x->name);
 
         return $clist;
+    }
+
+    public function getVisaList(){
+        $types = array("Skilled Worker Visa", "Study Visa", "Extended Stay Visa", "Permenant Stay");
+        $lengths = array("Up To 6 Months", "Rolling");
+
+        $this->ApplicationHandler->createVisaList($this->getCountryList(),$types, $lengths);
+
+        return $this->ApplicationHandler->getVisaTypes();
     }
 }
 ?>

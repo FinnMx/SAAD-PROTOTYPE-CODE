@@ -67,7 +67,7 @@ session_start();
 
         <footer class="container">
             <p>&copy; AFS 2023</p>
-        </footer>
+    </footer>
 
     </body>
 </html>

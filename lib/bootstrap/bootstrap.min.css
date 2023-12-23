@@ -4472,6 +4472,13 @@ tbody.collapse.show {
     border-radius: .3rem
 }
 
+.jumbotron-scrollable {
+    padding: 1rem 1rem;
+    background-color: #e9ecef;
+    overflow: auto;
+    border-radius: .3rem
+}
+
 @media (min-width:576px) {
     .jumbotron {
         padding: 4rem 2rem

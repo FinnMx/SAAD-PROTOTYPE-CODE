@@ -2,6 +2,7 @@
 require_once("php/Manager.php");
 session_start();
 
+//$_SESSION["Manager"]->debugToConsole(json_encode($_SESSION["Manager"]->getVisaList()));
 ?>
 
 <!DOCTYPE html>
@@ -77,9 +78,12 @@ session_start();
 
                     <div class="col-md-5">
                         <div class="jumbotron">
-                            <h1>Begin a new application</h1>
-                            <hr>
-                        
+                            <ul class="list-group">
+                                <?php foreach($_SESSION["Manager"]->getVisaList() as $x){ ?>
+                                    <li class="list-group-item">
+                                    </li>
+                                <?php } ?>
+                            </ul>
                         </div>
                     </div>
                 </div>
