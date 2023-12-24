@@ -57,7 +57,7 @@ if(isset($_POST["countryFilter"]) || isset($_POST["visaTypeFilter"])){
                 <div class="container pt-6" style="padding-top: rem;">
                     <h1>Begin a new application</h1>
                     <hr>   
-                    <a class="h6" href="javascript:history.back()">< Back</a>
+                    <a class="h6" href="./dashboard.php">< Back</a>
                 </div>
             </div>
 
