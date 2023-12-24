@@ -55,8 +55,8 @@ class Manager{
 
 		// Check if a response was given
 		if($requestReturn == false){
-			$this->_IsLoggedIn = false;
-			RaiseFatalError("API Interface","No response from \"".$apiDomain."\". The site may be down, or the username or password may be incorrect.");
+			$this->_isLoggedIn = false;
+			$this->debugToConsole("API Interface","No response from server. The site may be down, or the username or password may be incorrect.");
 			return;
 		}
 
@@ -68,11 +68,18 @@ class Manager{
         return $clist;
     }
 
-    public function getVisaList(){
-        $types = array("Skilled Worker Visa", "Study Visa", "Extended Stay Visa", "Permenant Stay");
+    public function getVisaList($filters){
         $lengths = array("Up To 6 Months", "Rolling");
-
-        $this->ApplicationHandler->createVisaList($this->getCountryList(),$types, $lengths);
+        $types = array("Skilled Worker Visa", "Study Visa", "Extended Stay Visa", "Permenant Stay");
+        if(!isset($filters)){
+            $this->ApplicationHandler->createVisaList($this->getCountryList(),$types, $lengths);
+        }if(isset($filters[0]) && !isset($filters[1])){
+            $this->ApplicationHandler->createVisaList(array($filters[0]),$types,$lengths);
+        }if(isset($filters[1]) && !isset($filters[0])){
+            $this->ApplicationHandler->createVisaList($this->getCountryList(),array($filters[1]),$lengths);
+        }if(isset($filters[1]) && isset($filters[0])){
+            $this->ApplicationHandler->createVisaList(array($filters[0]),array($filters[1]),$lengths);
+        }
 
         return $this->ApplicationHandler->getVisaTypes();
     }

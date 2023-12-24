@@ -1,8 +1,20 @@
 <?php
 require_once("php/Manager.php");
 session_start();
+$filters = NULL;
 
-//$_SESSION["Manager"]->debugToConsole(json_encode($_SESSION["Manager"]->getVisaList()));
+if(isset($_POST["countryFilter"]) || isset($_POST["visaTypeFilter"])){
+    if(empty($_POST["visaTypeFilter"])){
+        $_POST["visaTypeFilter"] = NULL;
+    }
+    if(empty($_POST["countryFilter"])){
+        $_POST["countryFilter"] = NULL;
+    }
+    $filters = array($_POST["countryFilter"],$_POST["visaTypeFilter"]);
+    $visalist = $_SESSION["Manager"]->getVisaList($filters);
+}else{
+    $visalist = $_SESSION["Manager"]->getVisaList($filters);
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +57,7 @@ session_start();
                 <div class="container pt-6" style="padding-top: rem;">
                     <h1>Begin a new application</h1>
                     <hr>   
-                    <a class="h6">< Back</a>
+                    <a class="h6" href="javascript:history.back()">< Back</a>
                 </div>
             </div>
 
@@ -55,11 +67,12 @@ session_start();
                         <div class="jumbotron">
                             <h1>Filters</h1>
                             <hr>
-                            <form action="" method="post">
+                            <form action="#" method="post">
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Select a <span class="font-weight-bold">Country</span></label>
                                     <br>
-                                    <select class="custom-select" id="Country">
+                                    <select class="custom-select" name="countryFilter">
+                                        <option value="<?php NULL;?>">None</option>
                                         <?php foreach($_SESSION["Manager"]->getCountryList() as $x){ ?>
                                         <option value="<?= $x?>"> <?= $x;?> </option>
                                         <?php }; ?>
@@ -68,7 +81,12 @@ session_start();
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Select a <span class="font-weight-bold">VISA Type</span></label>
                                     <br>
-                                    <select class="custom-select" id="VisaType">
+                                    <select class="custom-select" name="visaTypeFilter">
+                                        <option value="<?php NULL;?>">None</option>
+                                        <option value="Skilled Worker Visa">Skilled Worker Visa</option>
+                                        <option value="Study Visa">Study Visa</option>
+                                        <option value="Extended Stay Visa">Extended Stay Visa</option>
+                                        <option value="Permenant Stay">Permenant Stay</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-success">Apply</button>
@@ -77,11 +95,18 @@ session_start();
                     </div>
 
                     <div class="col-md-5">
-                        <div class="jumbotron">
+                        <div class="jumbotron-scrollable">
                             <ul class="list-group">
-                                <?php foreach($_SESSION["Manager"]->getVisaList() as $x){ ?>
-                                    <li class="list-group-item">
-                                    </li>
+                                <?php foreach($visalist as $x){ ?>
+                                    <a href="#" class="list-group-item-action flex-column align-items-start active">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1"><?= $x[1]?></h5>
+                                            <small href="#"><img style="width:2rem; height:2rem;"src="img/info.png"></img></small>
+                                        </div>
+                                        <p class="mb-1">Country: <?=$x[0]?></p>
+                                        <p class="mb-1">Length: <?=$x[2]?></p>
+                                    </a>
+                                    <hr>
                                 <?php } ?>
                             </ul>
                         </div>

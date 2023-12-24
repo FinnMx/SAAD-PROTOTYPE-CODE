@@ -4473,6 +4473,7 @@ tbody.collapse.show {
 }
 
 .jumbotron-scrollable {
+    max-height: 415px;
     padding: 1rem 1rem;
     background-color: #e9ecef;
     overflow: auto;
