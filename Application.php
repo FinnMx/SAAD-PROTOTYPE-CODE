@@ -60,8 +60,7 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
                         <h1>Step 1/5</h1>
                         <hr>
 
-
-                        <form action="#" method="post">
+                        <form action="ApplicationComplete.php?type=<?= $_GET["type"]; ?>&country=<?= $_GET["country"]; ?>&length=<?= $_GET["length"];?>" method="post">
                             <div class="row justify-content-center">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -84,8 +83,26 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
                                     <div class="form-group">
                                         <label for="postcode">Start typing your <span class="font-weight-bold">post code</span></label>
                                         <input type="postcode" class="form-control" name="Postcode" id="Postcode" placeholder="postcode">
-                                        <label for="street">Enter your <span class="font-weight-bold">street name</span></label>
-                                        <input type="street" class="form-control" name="Street" id="Street" placeholder="street">
+                                        <br>
+                                        <label for="streetnumber">Enter your <span class="font-weight-bold">street number</span></label>
+                                        <input type="streetnumber" class="form-control" name="StreetNumber" id="StreetNumber" placeholder="street number">
+                                        <br>
+                                        <label for="address1">Enter your <span class="font-weight-bold">1st line of address</span></label>
+                                        <input type="address1" class="form-control" name="Address1" id="Address1" placeholder="address1">
+                                        <br>
+                                        <label for="address2">Enter your <span class="font-weight-bold">2nd line of address</span></label>
+                                        <input type="address2" class="form-control" name="Address2" id="Address2" placeholder="address2">
+                                        <br>
+                                        <label for="city">Enter your <span class="font-weight-bold">city/town</span></label>
+                                        <input type="city" class="form-control" name="City" id="City" placeholder="city">
+                                        <br>
+                                        <label for="country">Enter your <span class="font-weight-bold">country</span></label>
+                                        <select class="custom-select" name="Country" id="Country">
+                                            <option value="<?php NULL; ?>">None</option>
+                                            <?php foreach ($_SESSION["Manager"]->getCountryList() as $x) { ?>
+                                                <option value="<?= $x ?>"> <?= $x; ?> </option>
+                                            <?php }; ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -108,27 +125,39 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
 
 <script>
     let places, input, address, city;
-    google.maps.event.addDomListener(window,"load",function(){
-        
+    google.maps.event.addDomListener(window, "load", function() {
+
         var places = new google.maps.places.Autocomplete(
             document.getElementById("Postcode")
         );
 
         let result;
 
-        google.maps.event.addListener(places,"place_changed", function() {
+        google.maps.event.addListener(places, "place_changed", function() {
             result = places.getPlace().address_components
 
-            console.log(result);
-
-            result.forEach(item =>{
-                switch(item.types[0]){
+            result.forEach(item => {
+                switch (item.types[0]) {
                     case "postal_code":
-                        console.log(item.long_name)
-                        document.getElementsByName("Postcode").value = item.long_name;
+                        document.getElementById("Postcode").value = item.long_name;
+                        break;
+                    case "street_number":
+                        document.getElementById("Streetnumber").value = item.long_name;
                         break;
                     case "route":
-                        document.getElementsByName("Street").value = item.long_name;
+                        document.getElementById("Address1").value = item.long_name;
+                        break;
+                    case "subpremise":
+                    case "route":
+                        document.getElementById("Address2").value = item.long_name;
+                        break;
+                    case "postal_town":
+                        document.getElementById("City").value = item.long_name;
+                        break;
+                    case "country":
+                        document.getElementById("Country").value = item.long_name;
+                        break;
+                    default:
                         break;
                 }
             });

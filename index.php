@@ -1,6 +1,8 @@
 <?php
 require_once("php/Manager.php");
 session_start();
+
+$_SESSION["Manager"] = new Manager;
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +30,7 @@ session_start();
                         <div class="jumbotron mt-3">
                             <h1>Login</h1>
                             <hr>
-                            <form action="/dashboard.php" method="post">
+                            <form action="/checklogin.php" method="post">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Email address</label>
                                   <input type="email" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Enter email">

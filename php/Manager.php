@@ -1,5 +1,8 @@
 <?php
 require_once("php/ApplicationHandler.php");
+
+//object to handle & manage the users session on the application
+
 class Manager{
 
     private $_isLoggedIn;
@@ -68,6 +71,7 @@ class Manager{
         return $clist;
     }
 
+    //This function would be restructured to actaully return VISA types from a participating countires API
     public function getVisaList($filters){
         $lengths = array("Up To 6 Months", "Rolling");
         $types = array("Skilled Worker Visa", "Study Visa", "Extended Stay Visa", "Permenant Stay");

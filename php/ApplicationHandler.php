@@ -1,4 +1,6 @@
 <?php
+//object to handle the application process. API calls to countries rules e.t.c. would go here.
+
 class ApplicationHandler{
 
     private $VISAs;
