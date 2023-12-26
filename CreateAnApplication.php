@@ -3,6 +3,10 @@ require_once("php/Manager.php");
 session_start();
 $filters = NULL;
 
+if(!($_SESSION["Manager"]->isLoggedIn())){
+    header("Location: ./index.php");
+}
+
 if(isset($_POST["countryFilter"]) || isset($_POST["visaTypeFilter"])){
     if(empty($_POST["visaTypeFilter"])){
         $_POST["visaTypeFilter"] = NULL;
@@ -96,19 +100,19 @@ if(isset($_POST["countryFilter"]) || isset($_POST["visaTypeFilter"])){
 
                     <div class="col-md-5">
                         <div class="jumbotron-scrollable">
-                            <ul class="list-group">
-                                <?php foreach($visalist as $x){ ?>
-                                    <a href="#" class="list-group-item-action flex-column align-items-start active">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h5 class="mb-1"><?= $x[1]?></h5>
-                                            <small href="#"><img style="width:2rem; height:2rem;"src="img/info.png"></img></small>
-                                        </div>
-                                        <p class="mb-1">Country: <?=$x[0]?></p>
-                                        <p class="mb-1">Length: <?=$x[2]?></p>
-                                    </a>
-                                    <hr>
-                                <?php } ?>
-                            </ul>
+                                <ul class="list-group">
+                                    <?php foreach($visalist as $x){ ?>
+                                        <a href="./Application.php?type=<?= $x[1]; ?>&country=<?= $x[0]; ?>&length=<?= $x[2]; ?>" class="list-group-item-action flex-column align-items-start active">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 name="submittedType" class="mb-1"><?= $x[1]?></h5>
+                                                <small href="#"><img style="width:2rem; height:2rem;"src="img/info.png"></img></small>
+                                            </div>
+                                            <p class="mb-1">Country: <?=$x[0]?></p>
+                                            <p class="mb-1">Length: <?=$x[2]?></p>
+                                        </a>
+                                        <hr>
+                                    <?php } ?>
+                                </ul>
                         </div>
                     </div>
                 </div>
