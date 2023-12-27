@@ -55,7 +55,7 @@ if(!isset($_SESSION["Manager"]) || !($_SESSION["Manager"]->isLoggedIn())){
                     <a class="h4"href="/CreateAnApplication.php">Create an application</a>
                   </div>
                   <div class="col-md-4 mt-2 text-primary">
-                    <a class="h4"href="/cock">View an application</a>
+                    <a class="h4"href="/ViewApplications.php">View an application</a>
                   </div>
                   <div class="col-md-4 mt-2 text-primary">
                     <a class="h4"href="/cock">Settings</a>
@@ -87,6 +87,7 @@ if(!isset($_SESSION["Manager"]) || !($_SESSION["Manager"]->isLoggedIn())){
               <hr>
       
             </div>
+
       
           </main>
       

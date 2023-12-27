@@ -7,19 +7,32 @@ class Manager{
 
     private $_isLoggedIn;
     private $ApplicationHandler;
+    private $ApplicantID;
+    private $dbpath;
+
 
     function __construct(){
         $this->ApplicationHandler = new ApplicationHandler;
+        $this->dbpath = "./php/db/database.db";
+        $this->ApplicantID;
     }
 
     public function isValidLogin($username,$password){
+        $db = new SQLite3($this->dbpath);
 
-        if($password == " "){
+        $stmt = $db->prepare("SELECT * FROM Applicants WHERE Email= :email AND Password= :password");
+        $stmt->bindParam(':email', $username);
+        $stmt->bindParam(':password', $password);
+        $result = ($stmt->execute())->fetchArray(SQLITE3_ASSOC);
+
+        if(empty($result)){
             $this->_isLoggedIn = false;
         }
         else{
+            $this->ApplicantID = $result["ApplicantID"];
             $this->_isLoggedIn = true;
         }
+        $db->close();
     }
 
     public function isLoggedIn(){
@@ -88,7 +101,33 @@ class Manager{
     }
 
     public function finaliseApplication($applicationData){
-        $this->ApplicationHandler->createApplication($applicationData);
+        $applicationID = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(15/strlen($x)) )),1,15);
+        
+        $db = new SQLite3($this->dbpath);
+        $db->exec("INSERT INTO Applications VALUES('"
+        .$applicationData."','"
+        .$applicationID."','"
+        .$this->ApplicantID."','"
+        .date('m/d/Y h:i:s a', time()).
+        "')"
+        );  
+        
+        $db->close();
+    }
+
+    public function getApplications(){
+        $db = new SQLite3($this->dbpath);
+
+        $stmt = $db->prepare("SELECT * FROM Applications WHERE ApplicantID = :id");
+        $stmt->bindParam(':id', $this->ApplicantID);
+        $result = ($stmt->execute());
+
+        $arr = array();
+        while($row = $result->fetchArray(SQLITE3_ASSOC)){
+            array_push($arr,$row);
+        }
+
+        return $arr;
     }
 }
 ?>

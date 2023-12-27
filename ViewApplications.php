@@ -5,41 +5,6 @@ session_start();
 if (!($_SESSION["Manager"]->isLoggedIn())) {
     header("Location: ./index.php");
 }
-
-$applicationData = array(
-    "firstname" => $_POST["Firstname"],
-    "lastname" => $_POST["Lastname"],
-    "phonenumber" => $_POST["PhoneNumber"],
-    "email" => $_POST["Email"],
-    "address" => array(
-        "postcode" => $_POST["Postcode"],
-        "streetnumber" => $_POST["StreetNumber"],
-        "address1" => $_POST["Address1"],
-        "address2" => $_POST["Address2"],
-        "city" => $_POST["City"],
-        "country" => $_POST["Country"]),
-    "visainfo" => array(
-        "visatype" => $_GET["type"],
-        "visacountry" => $_GET["country"],
-        "visalength" => $_GET["length"])
-);
-
-foreach($applicationData as $x){
-    if(gettype($x) == "array"){
-        foreach($x as $i){
-            if(empty($i)){
-                echo "here";
-                header("Location: ./Application.php?type=".$_GET["type"]."&country=".$_GET["country"]."&length=".$_GET["length"]."&error=true");
-            }
-        }
-    }else{
-        if(empty($x)){
-            header("Location: ./Application.php?type=".$_GET["type"]."&country=".$_GET["country"]."&length=".$_GET["length"]."&error=true");
-        }
-    }
-}
-
-$_SESSION["Manager"]->finaliseApplication(json_encode($applicationData));
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +14,7 @@ $_SESSION["Manager"]->finaliseApplication(json_encode($applicationData));
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <meta charset="utf-8">
-    <title>Application Complete</title>
+    <title>View Application</title>
 </head>
 
 <body>
@@ -81,7 +46,7 @@ $_SESSION["Manager"]->finaliseApplication(json_encode($applicationData));
     <main role="main">
         <div class="jumbotron-custom bg-transparent">
             <div class="container pt-6" style="padding-top: rem;">
-                <h1><?= $_GET["type"]; ?> application</h1>
+                <h1>View applications</h1>
                 <hr>
                 <a class="h6" href="./CreateAnApplication.php">
                     < Back</a>
@@ -91,18 +56,14 @@ $_SESSION["Manager"]->finaliseApplication(json_encode($applicationData));
         <div class="jumbotron-custom bg-transparent">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="jumbotron-scrollable">
-                        <h1>Step 5/5</h1>
-                        <hr>
-                        <div class="text-center">
-                            <img src="img/approved.png" style="width:15rem; height:15rem;"></img>
-                            <br>
-                            <br>
-                            <a>Your application is now being processed. You will recieve a</a>
-                            <br>
-                            <a>confirmation of this at your email <?=$_POST["Email"]?></a>
-                        </div>
-                    </div>
+                    <ul class="list-group">
+                        <?php foreach ($_SESSION["Manager"]->getApplications() as $x) { ?>
+                            <hr>
+                            <a class="list-group-item-action flex-column align-items-start active">
+                                Application:  <?=$x["ApplicationID"];?>  Date Created:  <?=$x["DateCreated"]?>
+                            </a>
+                        <?php } ?>
+                    </ul>
                 </div>
             </div>
         </div>
