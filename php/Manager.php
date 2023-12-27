@@ -108,7 +108,8 @@ class Manager{
         .$applicationData."','"
         .$applicationID."','"
         .$this->ApplicantID."','"
-        .date('m/d/Y h:i:s a', time()).
+        .date('m/d/Y h:i:s a', time())."','"
+        ."Processing".
         "')"
         );  
         

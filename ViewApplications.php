@@ -48,7 +48,7 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
             <div class="container pt-6" style="padding-top: rem;">
                 <h1>View applications</h1>
                 <hr>
-                <a class="h6" href="./CreateAnApplication.php">
+                <a class="h6" href="./dashboard.php">
                     < Back</a>
             </div>
         </div>
@@ -58,10 +58,17 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
                 <div class="col-md-10">
                     <ul class="list-group">
                         <?php foreach ($_SESSION["Manager"]->getApplications() as $x) { ?>
-                            <hr>
-                            <a class="list-group-item-action flex-column align-items-start active">
-                                Application:  <?=$x["ApplicationID"];?>  Date Created:  <?=$x["DateCreated"]?>
-                            </a>
+                            <li class="list-group-item">    
+                                <div class="row text-center align-middle">
+                                    <a class="col-sm-3">Application: <?= $x["ApplicationID"]; ?></a>
+                                    <a class="col-sm-3">Date Created: <?= $x["DateCreated"]; ?></a>
+                                    <a class="col-sm-3">Status: </a>
+                                    <?php ?>
+                                    <div class="card col-sm-3 <?php switch($x["Status"]){case "Processing": ?>bg-warning<?php break;case "Approved":?>bg-success<?php break;case "Declined":?>bg-danger<?php break;}?>" style="width:6rem;">
+                                        <div class="card-body"><?=$x["Status"];?></div>
+                                    </div>
+                                </div>
+                            </li>
                         <?php } ?>
                     </ul>
                 </div>
