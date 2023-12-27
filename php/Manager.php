@@ -10,7 +10,6 @@ class Manager{
 
     function __construct(){
         $this->ApplicationHandler = new ApplicationHandler;
-        $this->debugToConsole("balls");
     }
 
     public function isValidLogin($username,$password){
@@ -86,6 +85,10 @@ class Manager{
         }
 
         return $this->ApplicationHandler->getVisaTypes();
+    }
+
+    public function finaliseApplication($applicationData){
+        $this->ApplicationHandler->createApplication($applicationData);
     }
 }
 ?>

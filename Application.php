@@ -48,8 +48,7 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
             <div class="container pt-6" style="padding-top: rem;">
                 <h1><?= $_GET["type"]; ?> application</h1>
                 <hr>
-                <a class="h6" href="./CreateAnApplication.php">
-                    < Back</a>
+                <a class="h6" href="./CreateAnApplication.php">< Back</a>
             </div>
         </div>
 
@@ -77,6 +76,9 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
                                         <input type="email" class="form-control" name="Email" placeholder="Email">
                                         <br>
                                         <button type="submit" class="btn btn-success">Submit</button>
+                                        <?php if(isset($_GET["error"]) && $_GET["error"] == "true"){ ?>
+                                            <a>Please complete all fields</a>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

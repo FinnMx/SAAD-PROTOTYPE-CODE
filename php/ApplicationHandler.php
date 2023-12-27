@@ -21,6 +21,9 @@ class ApplicationHandler{
         $this->VISAs = $list;
     }
 
+    public function createApplication($applicationData){
+        
+    }
 
 }
 ?>
