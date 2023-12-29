@@ -77,21 +77,21 @@ if (!($_SESSION["AgentManager"]->isLoggedIn())) {
                                                                                                                                                                                 } ?>" style="width:6rem;">
                                         <div class="card-body"><?= $x["Status"]; ?></div>
                                     </div>
-                                    <div class="col-sm-2"><img src="img/info.png" style="height: 3rem; width: 3rem;" data-toggle="modal" data-target="#myModal"></img></div>
+                                    <div class="col-sm-2"><img src="img/info.png" style="height: 3rem; width: 3rem;" data-toggle="modal" data-target="#Modal<?= $x["ApplicationID"]; ?>" onmouseover="this.style.filter = 'invert';"></img></div>
                                 </div>
                             </li>
                             <!-- MODAL -->
-                            <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog">
+                            <div class="modal fade" id="Modal<?= $x["ApplicationID"]; ?>" role="dialog">
+                                <div class="modal-dialog modal-xl modal-dialog-scrollable">
 
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Modal Header</h4>
+                                            <h4 class="modal-title col-12 modal-title text-center">Application: <?= $x["ApplicationID"]; ?></h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Some text in the modal.</p>
+                                            <p><?= $x["ApplicationData"];?></p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
