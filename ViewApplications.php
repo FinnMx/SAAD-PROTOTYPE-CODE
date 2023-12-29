@@ -43,6 +43,12 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
         </nav>
     </header>
 
+    <div class="mb-3 mr-3" style="bottom: 0;
+    right: 0; position:fixed; z-index: 9999;">
+        <iframe class="mb-5" id="livechat" style="height:300px; border: none;" scrolling="no" onload="this.style.display = 'none';" src="/Livechat.php"></iframe>
+        <button class="h3" id="livechatToggle" style="position:absolute; bottom:0; right:0; outline:none;" onclick="toggleChat()"><span class="font-weight-bold"> ^ </span></button>
+    </div>
+
     <main role="main">
         <div class="jumbotron-custom bg-transparent">
             <div class="container pt-6" style="padding-top: rem;">

@@ -1,8 +1,8 @@
 <?php
-require_once("php/Manager.php");
+require_once("php/AgentManager.php");
 session_start();
 
-$_SESSION["Manager"] = new Manager;
+$_SESSION["AgentManager"] = new AgentManager;
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@ $_SESSION["Manager"] = new Manager;
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
           <ul class="navbar-nav ">
             <li class="nav-item">
-              <a class="nav-link active" href="/AgentLogin.php">Agent Login</a>
+              <a class="nav-link active" href="/index.php">User Login</a>
             </li>
           </ul>
         </div>
@@ -40,11 +40,10 @@ $_SESSION["Manager"] = new Manager;
                         <div class="jumbotron mt-3">
                             <h1>Login</h1>
                             <hr>
-                            <form action="/checklogin.php" method="post">
+                            <form action="/CheckAgentLogin.php" method="post">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1">Email address</label>
-                                  <input type="email" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
-                                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                  <label for="StaffID">Staff ID</label>
+                                  <input class="form-control" name="StaffID" placeholder="StaffID">
                                 </div>
                                 <div class="form-group">
                                   <label for="exampleInputPassword1">Password</label>
@@ -52,24 +51,6 @@ $_SESSION["Manager"] = new Manager;
                                 </div>
                                 <button type="submit" class="btn btn-success">Login</button>
                               </form>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="jumbotron mt-3">
-                            <h1>Sign Up</h1>
-                            <hr>
-                            <p>If you're not already registered, you can create a new account. You'll need an account if</p>
-                            <section class="d-flex justify-content-center mb-1">
-                                <div class="m-1">
-                                    <ul>
-                                        <li>You're planning on applying for a VISA for <span style="font-weight: bold;">yourself</span></li>
-                                        <br>
-                                        <li>You're managing <span style="font-weight: bold;">someone elses</span> VISA application</li>
-                                    </ul>
-                                </div>
-                            </section>
-                            <button type="submit" class="btn btn-success">Create an account</button>
                         </div>
                     </div>
                 </div>
