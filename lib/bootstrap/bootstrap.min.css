@@ -4703,6 +4703,19 @@ tbody.collapse.show {
     margin-bottom: 0
 }
 
+.list-group-scrollable {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+
+    max-height: 20rem;
+    padding: 1rem 1rem;
+    overflow: auto;
+}
+
 .list-group-item-action {
     width: 100%;
     color: #495057;
