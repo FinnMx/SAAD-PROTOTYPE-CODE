@@ -43,11 +43,11 @@ $_SESSION["AgentManager"] = new AgentManager;
                             <form action="/CheckAgentLogin.php" method="post">
                                 <div class="form-group">
                                   <label for="StaffID">Staff ID</label>
-                                  <input class="form-control" name="StaffID" placeholder="StaffID">
+                                  <input class="form-control" name="StaffID" placeholder="StaffID" value="Agent1">
                                 </div>
                                 <div class="form-group">
                                   <label for="exampleInputPassword1">Password</label>
-                                  <input type="password" class="form-control" name="Password" placeholder="Password">
+                                  <input type="password" class="form-control" name="Password" placeholder="Password" value="Password1">
                                 </div>
                                 <button type="submit" class="btn btn-success">Login</button>
                               </form>

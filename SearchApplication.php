@@ -2,8 +2,18 @@
 require_once("./php/AgentManager.php");
 session_start();
 
+$applicationList;
+
 if (!($_SESSION["AgentManager"]->isLoggedIn())) {
     header("Location: ./index.php");
+}
+
+if (isset($_POST["Filter"]) && !empty($_POST["Filter"])) {
+    if (empty($_POST["Filter"])) {
+    }
+    $applicationList = $_SESSION["AgentManager"]->getApplicationsFil(($_POST["Filter"]));
+} else {
+    $applicationList = $_SESSION["AgentManager"]->getApplications();
 }
 ?>
 
@@ -27,7 +37,7 @@ if (!($_SESSION["AgentManager"]->isLoggedIn())) {
         <!-- NAVBAR -->
         <nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-dark">
             <div class="container-fluid ">
-                <a class="navbar-brand " href="#">AFS</a>
+                <a class="navbar-brand " href="#">AFS <small>Admin</small></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -60,13 +70,15 @@ if (!($_SESSION["AgentManager"]->isLoggedIn())) {
         </div>
 
         <div class="row justify-content-center">
-            <div class="input-group col-md-5 mb-2">
-            <input class="form-control" placeholder="Enter an application reference number or customerID">
-            <button class="btn btn-success" type="button">Filter</button>
-            </div>
+            <form class=" col-md-5" action="#" method="post">
+                <div class="input-group mb-2">
+                    <input id="Filter" name="Filter" class="form-control" placeholder="Enter an application reference number or customerID">
+                    <button class="btn btn-success" type="submit">Filter</button>
+                </div>
+            </form>
             <div class="col-md-10">
                 <ul class="list-group-scrollable">
-                    <?php foreach ($_SESSION["AgentManager"]->getApplications() as $x) { ?>
+                    <?php foreach ($applicationList as $x) { ?>
                         <li class="list-group-item">
                             <div class="row justify-content-center text-center align-middle">
                                 <a class="col-sm-2">Application: <?= $x["ApplicationID"]; ?></a>
@@ -75,8 +87,8 @@ if (!($_SESSION["AgentManager"]->isLoggedIn())) {
                                 <?php ?>
                                 <div class="card col-sm-2 <?php switch ($x["Status"]) {
                                                                 case "Processing": ?>bg-warning<?php break;
-                                                                                                case "Approved": ?>bg-success<?php break;
-                                                                                                                            case "Declined": ?>bg-danger<?php break;
+                                                                                            case "Approved": ?>bg-success<?php break;
+                                                                                                                        case "Declined": ?>bg-danger<?php break;
                                                                                                                                                 } ?>" style="width:6rem;">
                                     <div class="card-body"><?= $x["Status"]; ?></div>
                                 </div>
@@ -91,62 +103,64 @@ if (!($_SESSION["AgentManager"]->isLoggedIn())) {
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title col-12 modal-title text-center">Application: <?= $x["ApplicationID"]; ?></h4>
+                                        <h4 class="modal-title col-12 modal-title text-center">Application: <span class="font-weight-bold"><?= $x["ApplicationID"]; ?></span><br>ApplicantID: <span class="font-weight-bold"><?= $x["ApplicantID"]; ?></span></h4>
                                     </div>
+                                    <form action="UpdateApplication.php?appid=<?=$x["ApplicationID"];?>" method="post">
                                     <div class="modal-body">
-                                        <div class="row justify-content-center">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="firstname"> <span class="font-weight-bold">First name</span></label>
-                                                    <input type="firstName" class="form-control" name="Firstname" placeholder="Firstname" value="<?= json_decode($x["ApplicationData"])->firstname; ?>">
-                                                    <br>
-                                                    <label for="lastname"> <span class="font-weight-bold">Last name</span></label>
-                                                    <input type="lastName" class="form-control" name="Lastname" placeholder="Lastname" value="<?= json_decode($x["ApplicationData"])->lastname; ?>">
-                                                    <br>
-                                                    <label for="phoneNumber"> <span class="font-weight-bold">Phone number</span></label>
-                                                    <input type="phoneNumber" class="form-control" name="PhoneNumber" placeholder="PhoneNumber" value="<?= json_decode($x["ApplicationData"])->phonenumber; ?>">
-                                                    <br>
-                                                    <label for="email"> <span class="font-weight-bold">Email</span></label>
-                                                    <input type="email" class="form-control" name="Email" placeholder="Email" value="<?= json_decode($x["ApplicationData"])->email; ?>">
-                                                    <br>
-                                                    <label for="visatype"> <span class="font-weight-bold">Visa type</span></label>
-                                                    <input type="visatype" class="form-control" name="Visatype" placeholder="Visatype" value="<?= json_decode($x["ApplicationData"])->visainfo->visatype; ?>">
-                                                    <br>
-                                                    <label for="visacountry"> <span class="font-weight-bold">Visa Country</span></label>
-                                                    <input type="visacountry" class="form-control" name="Visacountry" placeholder="Visacountry" value="<?= json_decode($x["ApplicationData"])->visainfo->visacountry; ?>" readonly>
-                                                    <br>
-                                                    <label for="visalength"> <span class="font-weight-bold">Visa length</span></label>
-                                                    <input type="visalength" class="form-control" name="Visalength" placeholder="Visalength" value="<?= json_decode($x["ApplicationData"])->visainfo->visalength; ?>">
-                                                    <br>
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="firstname"> <span class="font-weight-bold">First name</span></label>
+                                                        <input type="firstName" class="form-control" name="Firstname" placeholder="Firstname" value="<?= json_decode($x["ApplicationData"])->firstname; ?>">
+                                                        <br>
+                                                        <label for="lastname"> <span class="font-weight-bold">Last name</span></label>
+                                                        <input type="lastName" class="form-control" name="Lastname" placeholder="Lastname" value="<?= json_decode($x["ApplicationData"])->lastname; ?>">
+                                                        <br>
+                                                        <label for="phoneNumber"> <span class="font-weight-bold">Phone number</span></label>
+                                                        <input type="phoneNumber" class="form-control" name="PhoneNumber" placeholder="PhoneNumber" value="<?= json_decode($x["ApplicationData"])->phonenumber; ?>">
+                                                        <br>
+                                                        <label for="email"> <span class="font-weight-bold">Email</span></label>
+                                                        <input type="email" class="form-control" name="Email" placeholder="Email" value="<?= json_decode($x["ApplicationData"])->email; ?>">
+                                                        <br>
+                                                        <label for="visatype"> <span class="font-weight-bold">Visa type</span></label>
+                                                        <input type="visatype" class="form-control" name="Visatype" placeholder="Visatype" value="<?= json_decode($x["ApplicationData"])->visainfo->visatype; ?>">
+                                                        <br>
+                                                        <label for="visacountry"> <span class="font-weight-bold">Visa Country</span></label>
+                                                        <input type="visacountry" class="form-control" name="Visacountry" placeholder="Visacountry" value="<?= json_decode($x["ApplicationData"])->visainfo->visacountry; ?>" readonly>
+                                                        <br>
+                                                        <label for="visalength"> <span class="font-weight-bold">Visa length</span></label>
+                                                        <input type="visalength" class="form-control" name="Visalength" placeholder="Visalength" value="<?= json_decode($x["ApplicationData"])->visainfo->visalength; ?>">
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="postcode"> <span class="font-weight-bold">Post code</span></label>
+                                                        <input type="postcode" class="form-control" name="Postcode" id="Postcode" placeholder="postcode" value="<?= json_decode($x["ApplicationData"])->address->postcode; ?>">
+                                                        <br>
+                                                        <label for="streetnumber"> <span class="font-weight-bold">Street number</span></label>
+                                                        <input type="streetnumber" class="form-control" name="StreetNumber" id="StreetNumber" placeholder="street number" value="<?= json_decode($x["ApplicationData"])->address->streetnumber; ?>">
+                                                        <br>
+                                                        <label for="address1"> <span class="font-weight-bold">1st line of address</span></label>
+                                                        <input type="address1" class="form-control" name="Address1" id="Address1" placeholder="address1" value="<?= json_decode($x["ApplicationData"])->address->address1; ?>">
+                                                        <br>
+                                                        <label for="address2"> <span class="font-weight-bold">2nd line of address</span></label>
+                                                        <input type="address2" class="form-control" name="Address2" id="Address2" placeholder="address2" value="<?= json_decode($x["ApplicationData"])->address->address2; ?>">
+                                                        <br>
+                                                        <label for="city"> <span class="font-weight-bold">City/Town</span></label>
+                                                        <input type="city" class="form-control" name="City" id="City" placeholder="city" value="<?= json_decode($x["ApplicationData"])->address->city; ?>">
+                                                        <br>
+                                                        <label for="country"> <span class="font-weight-bold">Country</span></label>
+                                                        <input type="country" class="form-control" name="Country" id="Country" placeholder="country" value="<?= json_decode($x["ApplicationData"])->address->country; ?>">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="postcode"> <span class="font-weight-bold">Post code</span></label>
-                                                    <input type="postcode" class="form-control" name="Postcode" id="Postcode" placeholder="postcode" value="<?= json_decode($x["ApplicationData"])->address->postcode; ?>">
-                                                    <br>
-                                                    <label for="streetnumber"> <span class="font-weight-bold">Street number</span></label>
-                                                    <input type="streetnumber" class="form-control" name="StreetNumber" id="StreetNumber" placeholder="street number" value="<?= json_decode($x["ApplicationData"])->address->streetnumber; ?>">
-                                                    <br>
-                                                    <label for="address1"> <span class="font-weight-bold">1st line of address</span></label>
-                                                    <input type="address1" class="form-control" name="Address1" id="Address1" placeholder="address1" value="<?= json_decode($x["ApplicationData"])->address->address1; ?>">
-                                                    <br>
-                                                    <label for="address2"> <span class="font-weight-bold">2nd line of address</span></label>
-                                                    <input type="address2" class="form-control" name="Address2" id="Address2" placeholder="address2" value="<?= json_decode($x["ApplicationData"])->address->address2; ?>">
-                                                    <br>
-                                                    <label for="city"> <span class="font-weight-bold">City/Town</span></label>
-                                                    <input type="city" class="form-control" name="City" id="City" placeholder="city" value="<?= json_decode($x["ApplicationData"])->address->city; ?>">
-                                                    <br>
-                                                    <label for="country"> <span class="font-weight-bold">Country</span></label>
-                                                    <input type="country" class="form-control" name="Country" id="Country" placeholder="country" value="<?= json_decode($x["ApplicationData"])->address->country; ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Close Without Applying</button>
+                                        <button type="submit" class="btn btn-default btn-success" >Close And Apply</button>
                                     </div>
+                                    </form>
                                 </div>
 
                             </div>

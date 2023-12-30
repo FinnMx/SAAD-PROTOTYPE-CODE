@@ -43,12 +43,12 @@ $_SESSION["Manager"] = new Manager;
                             <form action="/checklogin.php" method="post">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Email address</label>
-                                  <input type="email" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                                  <input type="email" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Enter email" value="test@test.com">
                                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                 </div>
                                 <div class="form-group">
                                   <label for="exampleInputPassword1">Password</label>
-                                  <input type="password" class="form-control" name="Password" placeholder="Password">
+                                  <input type="password" class="form-control" name="Password" placeholder="Password" value="Password1">
                                 </div>
                                 <button type="submit" class="btn btn-success">Login</button>
                               </form>

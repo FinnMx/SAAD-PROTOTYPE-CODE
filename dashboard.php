@@ -75,19 +75,16 @@ if (!isset($_SESSION["Manager"]) || !($_SESSION["Manager"]->isLoggedIn())) {
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          <h2>Update 05/11/2024</h2>
+          <p>This is a place to display any messages sent by the AFS staff to the users.</p>
         </div>
         <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          <h2>Update 01/11/2024</h2>
+          <p>This is a place to display any messages sent by the AFS staff to the users.</p>
         </div>
         <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          <h2>Update 23/10/2024</h2>
+          <p>This is a place to display any messages sent by the AFS staff to the users.</p>
         </div>
       </div>
 

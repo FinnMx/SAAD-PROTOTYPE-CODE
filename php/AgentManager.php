@@ -45,5 +45,35 @@ class AgentManager{
 
         return $arr;
     }
+
+    public function getApplicationsFil($filter){
+        $filterType = "ApplicationID";
+        if(strlen($filter) < 15){
+            $filterType = "ApplicantID";
+        }
+        $db = new SQLite3($this->dbpath);
+
+        $stmt = $db->prepare("SELECT * FROM Applications WHERE ".$filterType." = :fil");
+        $stmt->bindParam(':fil', $filter);
+        $result = ($stmt->execute());
+        
+        var_dump($result);
+
+        $arr = array();
+        while($row = $result->fetchArray(SQLITE3_ASSOC)){
+            array_push($arr,$row);
+        }
+
+        return $arr;
+    }
+
+    public function updateApplication($applicationData,$appID){
+        $db = new SQLite3($this->dbpath);
+        $stmt = $db->prepare("UPDATE Applications SET ApplicationData = :appdata WHERE ApplicationID = :appid");
+        $stmt->bindParam(':appdata',$applicationData);
+        $stmt->bindParam(':appid',$appID);
+        $stmt->execute();
+        $db->close();
+    }
 }
 ?>
