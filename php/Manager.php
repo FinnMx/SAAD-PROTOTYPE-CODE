@@ -130,5 +130,13 @@ class Manager{
 
         return $arr;
     }
+
+    public function deleteApplication($applicationID){
+        $db = new SQLite3($this->dbpath);
+
+        $stmt = $db->prepare("DELETE FROM Applications WHERE ApplicationID = :appid");
+        $stmt->bindParam('appid', $applicationID);
+        $stmt->execute();
+    }
 }
 ?>

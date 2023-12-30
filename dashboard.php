@@ -87,14 +87,13 @@ if (!isset($_SESSION["Manager"]) || !($_SESSION["Manager"]->isLoggedIn())) {
           <p>This is a place to display any messages sent by the AFS staff to the users.</p>
         </div>
       </div>
-
-      <hr>
     </div>
 
   </main>
 
   <!-- FOOTER -->
   <footer class="container">
+    <hr>
     <p>&copy; AFS 2023</p>
   </footer>
 

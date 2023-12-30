@@ -25,9 +25,14 @@ if (isset($_POST["countryFilter"]) || isset($_POST["visaTypeFilter"])) {
 <html>
 
 <head>
-    <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <meta charset="utf-8">
+    <header>
+        <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <meta charset="utf-8">
+    </header>
     <title>Create An Application</title>
 </head>
 
@@ -110,17 +115,37 @@ if (isset($_POST["countryFilter"]) || isset($_POST["visaTypeFilter"])) {
                 <div class="col-md-5">
                     <div class="jumbotron-scrollable">
                         <ul class="list-group">
-                            <?php foreach ($visalist as $x) { ?>
-                                <a href="./Application.php?type=<?= $x[1]; ?>&country=<?= $x[0]; ?>&length=<?= $x[2]; ?>" class="list-group-item-action flex-column align-items-start active">
+                            <?php $index = 0; foreach ($visalist as $x) { ?>
+                                <!--href="./Application.php?type=<?= $x[1]; ?>&country=<?= $x[0]; ?>&length=<?= $x[2]; ?>"-->
+                                <a data-toggle="modal" data-target="#Modal<?= $index; ?>" class="list-group-item-action flex-column align-items-start active">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 name="submittedType" class="mb-1"><?= $x[1] ?></h5>
-                                        <small href="#"><img style="width:2rem; height:2rem;" src="img/info.png"></img></small>
                                     </div>
                                     <p class="mb-1">Country: <?= $x[0] ?></p>
                                     <p class="mb-1">Length: <?= $x[2] ?></p>
                                 </a>
-                                <hr>
-                            <?php } ?>
+                                <div class="modal fade" id="Modal<?= $index; ?>" role="dialog">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title col-12 modal-title text-center"> <?=$x[0]?>: <?=$x[1]?> (<?=$x[2]?>)</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                Detailed information about the visa type will be displayed here. Along with any other important information about the VISA and its rules.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-default btn-success" onclick="location.href='./Application.php?type=<?= $x[1]; ?>&country=<?= $x[0]; ?>&length=<?= $x[2]; ?>'">Continue with application</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                    <hr>
+                                <?php $index++; } ?>
                         </ul>
                     </div>
                 </div>
@@ -132,21 +157,21 @@ if (isset($_POST["countryFilter"]) || isset($_POST["visaTypeFilter"])) {
         <p>&copy; AFS 2023</p>
     </footer>
 
-    
+
 </body>
 
 <script>
     var button = document.getElementById('livechatToggle'); // Assumes element with id='button'
 
-    
+
     button.onclick = function() {
-      var div = document.getElementById('livechat');
-      if (div.style.display !== 'none') {
-        div.style.display = 'none';
-      } else {
-        div.style.display = 'block';
-      }
+        var div = document.getElementById('livechat');
+        if (div.style.display !== 'none') {
+            div.style.display = 'none';
+        } else {
+            div.style.display = 'block';
+        }
     };
-  </script>
+</script>
 
 </html>

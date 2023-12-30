@@ -61,18 +61,24 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
 
         <div class="jumbotron-custom bg-transparent">
             <div class="row justify-content-center">
+
                 <div class="col-md-10">
                     <ul class="list-group">
                         <?php foreach ($_SESSION["Manager"]->getApplications() as $x) { ?>
-                            <li class="list-group-item">    
-                                <div class="row text-center align-middle">
-                                    <a class="col-sm-3">Application: <?= $x["ApplicationID"]; ?></a>
-                                    <a class="col-sm-3">Date Created: <?= $x["DateCreated"]; ?></a>
-                                    <a class="col-sm-3">Status: </a>
+                            <li class="list-group-item">
+                                <div class="row justify-content-center text-center align-middle">
+                                    <a class="col-sm-2 ">Application: <?= $x["ApplicationID"]; ?></a>
+                                    <a class="col-sm-2 ">Date Created: <?= $x["DateCreated"]; ?></a>
+                                    <a class="col-sm-2">Status: </a>
                                     <?php ?>
-                                    <div class="card col-sm-3 <?php switch($x["Status"]){case "Processing": ?>bg-warning<?php break;case "Approved":?>bg-success<?php break;case "Declined":?>bg-danger<?php break;}?>" style="width:6rem;">
-                                        <div class="card-body"><?=$x["Status"];?></div>
+                                    <div class="card col-sm-2  <?php switch ($x["Status"]) {
+                                                                    case "Processing": ?>bg-warning<?php break;
+                                                                                                                    case "Approved": ?>bg-success<?php break;
+                                                                                                                                                            case "Declined": ?>bg-danger<?php break;
+                                                                                                                                                                                                } ?>" style="width:6rem;">
+                                        <div class="card-body"><?= $x["Status"]; ?></div>
                                     </div>
+                                    <div class="col-sm-2 d-flex align-items-center"><img src="img/cross.png" style="height: 3rem; width: 3rem;" onclick="location.href='./DeleteApplication.php?appid=<?=$x['ApplicationID'];?>'"></img></div>
                                 </div>
                             </li>
                         <?php } ?>
@@ -86,5 +92,19 @@ if (!($_SESSION["Manager"]->isLoggedIn())) {
         <p>&copy; AFS 2023</p>
     </footer>
 </body>
+
+<script>
+    var button = document.getElementById('livechatToggle'); // Assumes element with id='button'
+
+
+    button.onclick = function() {
+        var div = document.getElementById('livechat');
+        if (div.style.display !== 'none') {
+            div.style.display = 'none';
+        } else {
+            div.style.display = 'block';
+        }
+    };
+</script>
 
 </html>

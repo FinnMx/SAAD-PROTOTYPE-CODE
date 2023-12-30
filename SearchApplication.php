@@ -92,7 +92,7 @@ if (isset($_POST["Filter"]) && !empty($_POST["Filter"])) {
                                                                                                                                                 } ?>" style="width:6rem;">
                                     <div class="card-body"><?= $x["Status"]; ?></div>
                                 </div>
-                                <div class="col-sm-2"><img src="img/info.png" style="height: 3rem; width: 3rem;" data-toggle="modal" data-target="#Modal<?= $x["ApplicationID"]; ?>" onmouseover="this.style.filter = 'invert';"></img></div>
+                                <div class="col-sm-2 d-flex align-items-center"><img src="img/info.png" style="height: 3rem; width: 3rem;" data-toggle="modal" data-target="#Modal<?= $x["ApplicationID"]; ?>" onmouseover="this.style.filter = 'invert';"></img></div>
                             </div>
                         </li>
                         <!-- MODAL -->
