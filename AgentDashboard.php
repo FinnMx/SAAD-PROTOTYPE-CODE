@@ -52,7 +52,7 @@ if (!isset($_SESSION["AgentManager"]) || !($_SESSION["AgentManager"]->isLoggedIn
         <hr>
         <div class="row">
           <div class="col-md-4 mt-2 text-primary">
-            <a class="h4" href="SearchApplication.php">Serch for an application</a>
+            <a class="h4" href="SearchApplication.php">Search for an application</a>
           </div>
           <div class="col-md-4 mt-2 text-primary">
             <a class="h4" href="ViewOpenTickets.php">Open tickets</a>
